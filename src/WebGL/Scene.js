@@ -14,9 +14,10 @@
     var self = this;
 
     self.options = options || {};
-    
+
     _.defaults(self.options, {
       antialias: false,
+      fog: true,
       fogColour: 0xffffff,
       suppressRenderer: false
     });
@@ -35,7 +36,9 @@
     var scene = new THREE.Scene();
 
     // TODO: Fog distance should be an option
-    scene.fog = new THREE.Fog(self.options.fogColour, 1, 15000);
+    if (self.options.fog)  {
+      scene.fog = new THREE.Fog(self.options.fogColour, 1, 15000);
+    }
 
     // TODO: Make this more customisable, perhaps as a "day/night" option
     // - I'm sure people would want to add their own lighting too
@@ -55,7 +58,7 @@
     directionalLight2.position.z = -1;
 
     scene.add(directionalLight2);
-    
+
     return scene;
   };
 
@@ -103,7 +106,7 @@
 
   VIZI.Scene.prototype.render = function(camera) {
     var self = this;
-    
+
     if (!self.scene) {
       throw new Error("Scene is required for render");
     }

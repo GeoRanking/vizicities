@@ -14,12 +14,13 @@
     var self = this;
 
     self.options = options || {};
-    
+
     _.defaults(self.options, {
       crs: VIZI.CRS.EPSG3857,
       center: new VIZI.LatLon(51.50358, -0.01924),
       zoom: 16,
-      suppressRenderer: false // Set true for tests
+      suppressRenderer: false, // Set true for tests
+      fog: true
     });
 
     if (!self.options.viewport) {
@@ -41,7 +42,8 @@
     self.scene = new VIZI.Scene({
       viewport: self.options.viewport,
       // TODO: Remove this when running WebGL tests on Travis is solved
-      suppressRenderer: self.options.suppressRenderer
+      suppressRenderer: self.options.suppressRenderer,
+      fog: self.options.fog
     });
 
     self.camera = self.options.camera || new VIZI.Camera({
@@ -105,7 +107,7 @@
   VIZI.World.prototype.pixelsPerMeter = function(latLon, zoom) {
     var self = this;
     zoom = zoom || self.originZoom;
-    
+
     return self.crs.pixelsPerMeter(latLon, zoom);
   };
 

@@ -5,7 +5,7 @@
 /**
  * Blueprint choropleth output
  * @author Robin Hawkes - vizicities.com
- */  
+ */
 
   // output: {
   //   type: "BlueprintOutputChoropleth",
@@ -60,6 +60,12 @@
       // TODO: Remove this by implementing logic to make points clockwise
       side: THREE.BackSide
     });
+
+    // Choropleth opacity settings
+    if (self.options.opacity)  {
+      material.opacity = self.options.opacity;
+      material.transparent = true;
+    }
 
     // Choropleth range settings
     if (self.options.colourRange) {
