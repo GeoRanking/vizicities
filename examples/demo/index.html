@@ -35,15 +35,36 @@
             <h3>Categories and data</h3>
             <p>Input the category and data for the areas</p>
             <p>Areas for data are: <span id="dataNames"></span></p>
-            <textarea id="catndata">{
-    "price" : [25000,33000,40000,10000],
-    "acceleration" : [15.3,12.3,11.1,12.2],
-    "cargo" : [250, 380, 480,900],
-    "max speed" : [250,380,480,800]
+            <label for="catndata">Categories and Data</label>
+            <label for="persona">Persona details</label>
+            <textarea id="catndata" style="display: inline-block">{
+    "price" : [250000, 330000, 400000, 600000],
+    "distance to station" : [15.3, 12.3, 11.1, 12.2],
+    "bedrooms" : [2, 3, 4, 9],
+    "garden size" : [250, 380, 480, 800]
+}</textarea>
+            <textarea id="persona" style="display: inline-block">{
+    criteria : {
+        "price" : {
+            "importance" : 9,
+            "range" : [300000,600000],
+            "inverse" : true
+        },
+        "distance to station" : {
+            "importance" : 6
+        },
+        "bedrooms" : {
+            "importance" : 3
+        },
+        "garden size" : {
+            "importance" : 1
+        }
+    }
 }</textarea>
             <textarea id="output" style="display: none"></textarea>
             <button onclick="getranks()" id="catndatabutton">Rank it</button>
         </section>
+        <button onclick="viewVizi()" id="viewvizibutton" style="display: none;">Show all this in ViziCities</button>
         <div id="vizicities-viewport" style="display: none"></div>
         <script src="../../build/vizi.js"></script>
         <script src="main.js"></script>

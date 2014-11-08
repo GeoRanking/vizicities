@@ -1,24 +1,23 @@
 // Globals
 var dataNames = [];
+var choroplethColours = [];
+var jsondata;
 
 var persona = {
     criteria : {
         "price" : {
             "importance" : 9,
-            "range" : [20000,40000],
+            "range" : [300000,600000],
             "inverse" : true
         },
-        "acceleration" : {
+        "distance to station" : {
             "importance" : 6
-            //"range" : []
         },
-        "cargo" : {
+        "bedrooms" : {
             "importance" : 3
-            //"range" : [300,500]
         },
-        "max speed" : {
-            "importance" : 7
-            //"range" : []
+        "garden size" : {
+            "importance" : 1
         }
     }
 };
@@ -67,12 +66,20 @@ function AreaData (data)  {
 };
 function getGeoJSON(){
     var kmldata = document.getElementById("areakml").value;
-    document.getElementById("areakml").value = AreaData(kmldata);
+    jsondata = AreaData(kmldata);
+    document.getElementById("areakml").value = jsondata;
 
     document.getElementById("areakmlbutton").style.display = 'none';
     document.getElementById("colour").style.display = 'block';
 
     document.getElementById("dataNames").innerHTML = dataNames;
+
+    var newFile = "./data/data.geojson";
+    var file = new File([""], newFile);
+
+    file.open("w");
+    file.write(jsondata);
+    file.close();
 }
 
 // Colours
@@ -106,18 +113,17 @@ function ColourChange(hex, brightness) {
 function getColours(){
     var colour = document.getElementById("basecolour").value; // Green - #FF69B4 || Pink - FF69B4
     var brightness = -0.1; // i.e. 0.1 = 10%, negative to go darker
-    var newcolour = [];
 
     // for each rank - i.e. i = 0 to number of ranks
     for (var i = 0; i <= 6; i++) {
         // create array of colours
-        newcolour[i] = ColourChange(colour, i*brightness);
+        choroplethColours[i] = ColourChange(colour, i*brightness);
 
         //output demo colours - not needed in project
         var output = document.getElementById("colours");
         var newelement = output.appendChild(document.createElement("div"));
-        newelement.style.backgroundColor = newcolour[i];
-        newelement.innerHTML = "Grade " + i + " -  " + newcolour[i];
+        newelement.style.backgroundColor = choroplethColours[i];
+        newelement.innerHTML = "Grade " + i + " -  " + choroplethColours[i];
     }
 
     document.getElementById("basecolour").style.display = 'none';
@@ -248,4 +254,12 @@ function getranks() {
     document.getElementById("output").style.display = 'block';
 
     document.getElementById("catndatabutton").style.display = 'none';
+
+    document.getElementById("viewvizibutton").style.display = "block";
+}
+
+function viewVizi() {
+    document.getElementById("vizicities-viewport").style.display = "block";
+    document.getElementById("viewvizibutton").style.display = "none";
+    runVizi();
 }

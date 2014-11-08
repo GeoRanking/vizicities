@@ -35,6 +35,11 @@ textarea {
     height: 200px;
 }
 
+label {
+    width: 506px;
+    display: inline-block;
+}
+
 input {
     width: 500px;
     height: 36px;
@@ -64,9 +69,7 @@ button {
 
 #vizicities-viewport {
     height: 720px;
-    left: 50%;
-    margin: -360px 0 0 -640px;
-    position: absolute;
-    top: 50%;
-    width: 1280px;
+    margin: 24px 0;
+    width: 100%;
+    background: #333333;
 }
