@@ -128,6 +128,7 @@ function getColours(){
 // Ranking
 var rank = function(data, persona)  {
     // For each criterion
+    data = JSON.parse(data);
     var options = {};
     for (var i = 0; i < Object.keys(data).length; i++)  {
         var criterion = Object.keys(data)[i];
@@ -243,7 +244,7 @@ function getranks() {
 
     var catndata = document.getElementById("catndata").value;
 
-    document.getElementById("output").value = rank(catndata, persona);
+    document.getElementById("output").value = JSON.stringify(rank(catndata, persona));
     document.getElementById("output").style.display = 'block';
 
     document.getElementById("catndatabutton").style.display = 'none';
