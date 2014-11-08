@@ -1,0 +1,72 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+body {
+    background: #222;
+}
+
+.container {
+    margin: 50px;
+    padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    color: #ffffff;
+}
+
+h1 {
+    font-weight: 300;
+}
+
+a {
+    color: #ffffff;
+}
+
+section {
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+}
+
+textarea {
+    width: 500px;
+    height: 200px;
+}
+
+input {
+    width: 500px;
+    height: 36px;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+button {
+    display: block;
+    width: 200px;
+    height: 36px;
+    background: #ffffff;
+    border: none;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', sans-serif;
+    margin-top: 12px;
+}
+
+#colours {
+    width: 100%;
+    text-align: center;
+}
+
+#colours div {
+    padding: 12px;
+}
+
+#vizicities-viewport {
+    height: 720px;
+    left: 50%;
+    margin: -360px 0 0 -640px;
+    position: absolute;
+    top: 50%;
+    width: 1280px;
+}

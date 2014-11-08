@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>ViziCities - Basic Example</title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../../build/vizi.css">
+    <script src="jquery.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>CO600 Prototype</h1>
+        <section id="area">
+            <h3>Area data</h3>
+            <p>Input KML Polygons to serve as our areas to rank</p>
+            <p>We will convert it to GeoJSON and display it on vizicities</p>
+            <p><a href="data/CT1.xml" target="_blank">Sample CT1 data</a></p>
+            <textarea id="areakml"></textarea>
+            <button onclick="getGeoJSON()" id="areakmlbutton">Get GeoJSON</button>
+        </section>
+        <section id="colour" style="display: none">
+            <h3>Rank colour</h3>
+            <p>Input a base colour hex code to use as rank 0</p>
+            <p>We will then calculate progressivly darker shades to the other ranks</p>
+            <p>For example: Green - #00FF00 || Pink - FF69B4</p>
+            <input id="basecolour"/>
+            <button onclick="getColours()" id="basecolourbutton">Get Colours</button>
+            <div id="colours"></div>
+            <script>
+            </script>
+        </section>
+        <section id="data" style="display: none">
+            <h3>Categories and data</h3>
+            <p>Input the category and data for the areas</p>
+            <p>Areas for data are: <span id="dataNames"></span></p>
+            <textarea id="catndata">
+{
+    "price" : [25000,33000,40000,10000],
+    "acceleration" : [15.3,12.3,11.1,12.2],
+    "cargo" : [250, 380, 480,900],
+    "max speed" : [250,380,480,800]
+}
+            </textarea>
+            <textarea id="output" style="display: none"></textarea>
+            <button onclick="getranks()" id="catndatabutton">Rank it</button>
+        </section>
+        <div id="vizicities-viewport" style="display: none"></div>
+        <script src="../../build/vizi.js"></script>
+        <script src="main.js"></script>
+    </div>
+</body>
+</html>

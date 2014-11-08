@@ -150,6 +150,12 @@
       shading: THREE.FlatShading
     });
 
+    // Building opacity settings
+    if (self.options.opacity)  {
+      material.opacity = self.options.opacity;
+      material.transparent = true;
+    }
+
     // Load buildings in a Web Worker
     self.worker(self.world.origin, self.world.originZoom, buildings).then(function(result) {
       var model = result.model;
