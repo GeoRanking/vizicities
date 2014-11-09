@@ -48,7 +48,8 @@ function AreaData (data)  {
 
         for ( var i = 0; i < indivcoords.length; i++ ) {
             var coord = indivcoords[i].split(",");
-            if ( coord[0] != "undefined" || coord[1] != "undefined" ){
+            //TODO fix the undefined issue
+            if ( coord[0] != "undefined" || coord[1] != "undefined" ) {
                 geojson += " [" + coord[0] + "," + coord[1] + "]";
                 if ( i < indivcoords.length-1 ) {
                     geojson += ',';
@@ -249,17 +250,26 @@ Array.min = function( array ){
 function getranks() {
 
     var catndata = document.getElementById("catndata").value;
+    var rankoutput = rank(catndata, persona);
 
-    document.getElementById("output").value = JSON.stringify(rank(catndata, persona));
+    var parsedjsondata = JSON.parse(jsondata);
+    console.log(parsedjsondata);
+    //var parsedrankoutput = rankoutput;
+
+    for (var i = 0; i < parsedjsondata["features"].length; i++)  {
+        parsedjsondata.features[i].properties.ranking = rankoutput[parsedjsondata.features[i].properties.name];
+    }
+
+    document.getElementById("output").value = JSON.stringify(rankoutput);
     document.getElementById("output").style.display = 'block';
-
     document.getElementById("catndatabutton").style.display = 'none';
-
+    document.getElementById("finaloutput").value = JSON.stringify(parsedjsondata);
+    document.getElementById("finaloutput").style.display = "block";
     document.getElementById("viewvizibutton").style.display = "block";
-}
+};
 
 function viewVizi() {
     document.getElementById("vizicities-viewport").style.display = "block";
     document.getElementById("viewvizibutton").style.display = "none";
     runVizi();
-}
+};

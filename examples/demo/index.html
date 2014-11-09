@@ -16,7 +16,7 @@
             <h3>Area data</h3>
             <p>Input KML Polygons to serve as our areas to rank</p>
             <p>We will convert it to GeoJSON and display it on vizicities</p>
-            <p><a href="data/CT1.xml" target="_blank">Sample CT1 data</a></p>
+            <p><a href="data/CT2.xml" target="_blank">Sample CT2 data</a></p>
             <textarea id="areakml"></textarea>
             <button onclick="getGeoJSON()" id="areakmlbutton">Get GeoJSON</button>
         </section>
@@ -64,6 +64,9 @@
             <textarea id="output" style="display: none"></textarea>
             <button onclick="getranks()" id="catndatabutton">Rank it</button>
         </section>
+        <p>Because this demo is pure JS, we need to copy this into the data file before loading ViziCities</p>
+        <p>A Python implementation will solve this issue.</p>
+        <textarea id="finaloutput" style="display: none"></textarea>
         <button onclick="viewVizi()" id="viewvizibutton" style="display: none;">Show all this in ViziCities</button>
         <div id="vizicities-viewport" style="display: none"></div>
         <script src="../../build/vizi.js"></script>

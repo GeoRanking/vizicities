@@ -2,7 +2,7 @@ function runVizi() {
 
     var world = new VIZI.World({
       viewport: document.querySelector("#vizicities-viewport"),
-      center: new VIZI.LatLon(51.278709, 1.080535)
+      center: new VIZI.LatLon(51.297619, 1.069201)//51.278709, 1.080535)
     });
 
     VIZI.DEBUG = false;
@@ -91,7 +91,7 @@ function runVizi() {
       input: {
         type: "BlueprintInputGeoJSON",
         options: {
-          path: "./data/dummy.geojson"
+          path: "./data/data.geojson"
         }
       },
       output: {
