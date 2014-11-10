@@ -64,10 +64,12 @@
             <textarea id="output" style="display: none"></textarea>
             <button onclick="getranks()" id="catndatabutton">Rank it</button>
         </section>
-        <p>Because this demo is pure JS, we need to copy this into the data file before loading ViziCities</p>
-        <p>A Python implementation will solve this issue.</p>
-        <textarea id="finaloutput" style="display: none"></textarea>
-        <button onclick="viewVizi()" id="viewvizibutton" style="display: none;">Show all this in ViziCities</button>
+        <section id="copydata" style="display: none">
+            <p>Because this demo is pure JS, we need to copy this into the data file before loading ViziCities</p>
+            <p>A Python implementation will solve this issue.</p>
+            <textarea id="finaloutput"></textarea>
+            <button onclick="viewVizi()" id="viewvizibutton">Show all this in ViziCities</button>
+        </section>
         <div id="vizicities-viewport" style="display: none"></div>
         <script src="../../build/vizi.js"></script>
         <script src="main.js"></script>

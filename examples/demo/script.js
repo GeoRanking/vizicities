@@ -264,7 +264,7 @@ function getranks() {
     document.getElementById("output").style.display = 'block';
     document.getElementById("catndatabutton").style.display = 'none';
     document.getElementById("finaloutput").value = JSON.stringify(parsedjsondata);
-    document.getElementById("finaloutput").style.display = "block";
+    document.getElementById("copydata").style.display = "block";
     document.getElementById("viewvizibutton").style.display = "block";
 };
 
