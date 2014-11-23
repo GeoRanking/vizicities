@@ -16,7 +16,9 @@
 
     VIZI.BlueprintOutput.call(self, options);
 
-    _.defaults(self.options, {});
+    _.defaults(self.options, {
+      colour: 0xff0000,
+    });
 
     // Triggers and actions reference
     self.triggers = [
@@ -45,19 +47,23 @@
   VIZI.BlueprintOutputDebugPoints.prototype.outputPoints = function(data) {
     var self = this;
 
-    var material = new THREE.MeshBasicMaterial({
-      color: 0xff0000,
+    var material = new THREE.MeshLambertMaterial({
+      color: self.options.colour,
       // vertexColors: THREE.VertexColors,
       // ambient: 0xffffff,
       // emissive: 0xcccccc,
       shading: THREE.FlatShading
     });
 
-    var barGeom = new THREE.BoxGeometry( 40, 1, 40 );
+    material.opacity = 0.5;
+    material.transparent = true;
+
+
+    var cylGeom = new THREE.CylinderGeometry( 5, 1, 5 );
 
     // Shift each vertex by half the bar height
     // This means it will scale from the bottom rather than the centre
-    var vertices = barGeom.vertices;
+    var vertices = cylGeom.vertices;
     for (var v = 0; v < vertices.length; v++) {
       vertices[v].y += 0.5;
     }
@@ -75,9 +81,9 @@
       offset.y = -1 * geoCoord.y;
 
       // TODO: Get this from options
-      var height = 1000;
+      var height = 10;
 
-      var mesh = new THREE.Mesh(barGeom);
+      var mesh = new THREE.Mesh(cylGeom);
 
       mesh.scale.y = height;
 

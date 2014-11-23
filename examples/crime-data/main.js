@@ -204,7 +204,9 @@ var csvConfig = {
     },
     output: {
         type: "BlueprintOutputDebugPoints",
-        options: {}
+        options: {
+            colour: "#663399",
+        }
     },
     triggers: [{
         triggerObject: "output",

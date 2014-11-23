@@ -58,7 +58,7 @@
       }
     })
     .row(function(d) { return { "coordinates" : [d.Longitude, d.Latitude]}; })
-    .get(function(error, rows) { console.log(rows); self.emit("dataReceived", rows); });
+    .get(function(error, rows) { self.emit("dataReceived", rows); });
 
   };
 
