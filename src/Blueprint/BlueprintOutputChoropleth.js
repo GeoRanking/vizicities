@@ -92,7 +92,6 @@
     _.each(data, function(feature) {
       var offset = new VIZI.Point();
       var shape = new THREE.Shape();
-
       _.each(feature.outline, function(coord, index) {
         var geoCoord = self.world.project(new VIZI.LatLon(coord[1], coord[0]));
 

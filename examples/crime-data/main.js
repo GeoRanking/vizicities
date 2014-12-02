@@ -3,7 +3,8 @@ var world = new VIZI.World({
   center: new VIZI.LatLon(51.278709, 1.080535)
 });
 
-var controls = new VIZI.ControlsMap(world.camera);
+//var controls = new VIZI.ControlsMap(world.camera);
+var controls = new VIZI.ControlsClick(world.camera);
 
 var mapConfig = {
   input: {
@@ -143,8 +144,8 @@ var buildingsConfig = {
   }]
 };
 
-var switchboardBuildings = new VIZI.BlueprintSwitchboard(buildingsConfig);
-switchboardBuildings.addToWorld(world);
+//var switchboardBuildings = new VIZI.BlueprintSwitchboard(buildingsConfig);
+//switchboardBuildings.addToWorld(world);
 
 var choroplethConfig = {
     input: {
