@@ -3,15 +3,16 @@
   "use strict";
 
 /**
- * Blueprint debug lines output
+ * Blueprint debug circles output
  * @author Robin Hawkes - vizicities.com
+ * @author Edward Oliver Greer - eogreer.me
  */  
 
   // output: {
-  //   type: "BlueprintOutputDebugLines",
+  //   type: "BlueprintOutputDebugCircles",
   //   options: {}
   // }
-  VIZI.BlueprintOutputDebugLines = function(options) {
+  VIZI.BlueprintOutputDebugCircles = function(options) {
     var self = this;
 
     VIZI.BlueprintOutput.call(self, options);
@@ -24,16 +25,16 @@
     ];
 
     self.actions = [
-      {name: "outputLines", arguments: ["data"]}
+      {name: "outputCircles", arguments: ["data"]}
     ];
 
     self.world;
   };
 
-  VIZI.BlueprintOutputDebugLines.prototype = Object.create( VIZI.BlueprintOutput.prototype );
+  VIZI.BlueprintOutputDebugCircles.prototype = Object.create( VIZI.BlueprintOutput.prototype );
 
   // Initialise instance and start automated processes
-  VIZI.BlueprintOutputDebugLines.prototype.init = function() {
+  VIZI.BlueprintOutputDebugCircles.prototype.init = function() {
     var self = this;
 
     self.emit("initialised");
@@ -41,17 +42,21 @@
 
   // {
   //   coordinates: [lon, lat],
-  //   height: 123
+  //   distance: 123
   // }
-  VIZI.BlueprintOutputDebugLines.prototype.outputLines = function(data) {
+  VIZI.BlueprintOutputDebugCircles.prototype.outputCircles = function(data) {
     var self = this;
 
-    var material = new THREE.LineBasicMaterial({
+    var material = new THREE.MeshBasicMaterial({
       color: 0xff0000,
-      linewidth: 10
     });
 
-    var geom = new THREE.Geometry();
+    if (self.options.opacity)  {
+      material.opacity = self.options.opacity;
+      material.transparent = true;
+    }
+
+    var geom; // = new THREE.CircleGeometry();
 
     // Local pixels per meter - set once per tile
     var pixelsPerMeter;
@@ -67,19 +72,27 @@
 
       // TODO: Get this from options
       var height = 50;
+      var radius = 100;
+      var segments = 32;
 
       // Multiply height in meters by pixels per meter ratio at latitude
       height *= pixelsPerMeter.y;
 
+      geom = new THREE.CircleGeometry(radius, segments);
       geom.vertices.push(new THREE.Vector3( geoCoord.x, height, geoCoord.y ));
+
     });
 
-    var line = new THREE.Line( geom, material );
+    var circle = new THREE.Mesh( geom, material );
 
-    self.add(line);
+    circle.rotateX(-90*(Math.PI/180));
+
+    circle.position.y = 100;
+
+    self.add(circle);
   };
 
-  VIZI.BlueprintOutputDebugLines.prototype.onAdd = function(world) {
+  VIZI.BlueprintOutputDebugCircles.prototype.onAdd = function(world) {
     var self = this;
     self.world = world;
     self.init();

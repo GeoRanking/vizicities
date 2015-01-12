@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" version="1.1" creator="TomTom" xmlns="http://www.topografix.com/GPX/1/1">
+    <metadata>
+        <name>Sample GPX</name>
+    </metadata>
+    <trk>
+        <name>Sample Track</name>
+        <trkseg>
+            <trkpt lon="1.073061" lat="51.282738">
+                <ele>10</ele>
+                <time>2014-12-13T00:00:00.000Z</time>
+                
+            </trkpt>
+            <trkpt lon="1.082303" lat="51.276573">
+                <ele>10</ele>
+                <time>2014-12-13T00:00:00.000Z</time>
+                
+            </trkpt>
+        </trkseg>
+    </trk>
+</gpx>

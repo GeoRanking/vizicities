@@ -99,6 +99,7 @@ var buildingsConfig = {
         tilesPerDirection: 1,
         cullZoom: 13
       }],
+      opacity: 0.7,
       workerURL: "../../build/vizi-worker.min.js"
     }
   },
@@ -198,16 +199,14 @@ switchboardChoropleth.addToWorld(world);
 
 var distanceConfig = {
     input: {
-        type: "BlueprintInputGeoJSON",
+        type: "BlueprintInputGPX",
         options: {
-            path: "./data/distance.geojson"
+            path: "./data/distance.gpx"
         }
     },
     output: {
-        type: "BlueprintOutputDistance",
+        type: "BlueprintOutputDebugLines",
         options: {
-            colourRange: ["#669966"],
-            layer: 150
         }
     },
     triggers: [{
@@ -221,12 +220,19 @@ var distanceConfig = {
     }, {
         triggerObject: "input",
         triggerName: "dataReceived",
-        triggerArguments: ["geoJSON"],
+        triggerArguments: ["gpx"],
         actionObject: "output",
-        actionName: "outputDistance",
+        actionName: "outputLines",
         actionArguments: ["data"],
         actionOutput: {
             data: {
+                process: "map",
+                itemsObject: "gpx",
+                itemsProperties: "trk.trkseg.trkpt",
+                transformation: {
+                    coordinates: ["@lon", "@lat"],
+                    height: "ele"
+                }
             }
         }
     }]
@@ -234,6 +240,51 @@ var distanceConfig = {
 
 var switchboardDistance = new VIZI.BlueprintSwitchboard(distanceConfig);
 switchboardDistance.addToWorld(world);
+
+var distanceCircleConfig = {
+    input: {
+        type: "BlueprintInputGPX",
+        options: {
+            path: "./data/distancecircle.gpx"
+        }
+    },
+    output: {
+        type: "BlueprintOutputDebugCircles",
+        options: {
+            opacity: 0.7
+        }
+    },
+    triggers: [{
+        triggerObject: "output",
+        triggerName: "initialised",
+        triggerArguments: [],
+        actionObject: "input",
+        actionName: "requestData",
+        actionArguments: [],
+        actionOutput: {}
+    }, {
+        triggerObject: "input",
+        triggerName: "dataReceived",
+        triggerArguments: ["gpx"],
+        actionObject: "output",
+        actionName: "outputCircles",
+        actionArguments: ["data"],
+        actionOutput: {
+            data: {
+                process: "map",
+                itemsObject: "gpx",
+                itemsProperties: "trk.trkseg.trkpt",
+                transformation: {
+                    coordinates: ["@lon", "@lat"],
+                    distance: "distance"
+                }
+            }
+        }
+    }]
+};
+
+var switchboardDistanceCircle = new VIZI.BlueprintSwitchboard(distanceCircleConfig);
+switchboardDistanceCircle.addToWorld(world);
 
 var csvConfig = {
     input: {
