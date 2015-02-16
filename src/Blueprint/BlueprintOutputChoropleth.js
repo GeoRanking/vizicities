@@ -2,18 +2,18 @@
 (function() {
   "use strict";
 
-/**
- * Blueprint choropleth output
- * @author Robin Hawkes - vizicities.com
- */
+  /**
+   * Blueprint choropleth output
+   * @author Robin Hawkes - vizicities.com
+   */
 
-  // output: {
-  //   type: "BlueprintOutputChoropleth",
-  //   options: {
-  //     colourRange: ["#ffffe5","#f7fcb9","#d9f0a3","#addd8e","#78c679","#41ab5d","#238443","#006837","#004529"],
-  //     layer: 100
-  //   }
-  // }
+    // output: {
+    //   type: "BlueprintOutputChoropleth",
+    //   options: {
+    //     colourRange: ["#ffffe5","#f7fcb9","#d9f0a3","#addd8e","#78c679","#41ab5d","#238443","#006837","#004529"],
+    //     layer: 100
+    //   }
+    // }
   VIZI.BlueprintOutputChoropleth = function(options) {
     var self = this;
 
@@ -33,7 +33,14 @@
       {name: "outputChoropleth", arguments: ["data"]}
     ];
 
+    // Store objects for the blueprint
+    self.objects = [];
+
     self.world;
+
+    VIZI.Messenger.on("clickedObject", function(raycaster) {
+      self.clickHandler(raycaster);
+    });
   };
 
   VIZI.BlueprintOutputChoropleth.prototype = Object.create( VIZI.BlueprintOutput.prototype );
@@ -79,15 +86,16 @@
 
       // TODO: Decouple range values
       var scale = d3.scale.linear()
-        .domain([lo, hi])
-        .range([1, 500]);
+          .domain([lo, hi])
+          .range([1, 500]);
 
       var scaleColour = d3.scale.quantile()
-        .domain([lo, hi])
-        .range(self.options.colourRange);
+          .domain([lo, hi])
+          .range(self.options.colourRange);
     }
 
-    var combinedGeom = new THREE.Geometry();
+    //var combinedGeom = new THREE.Geometry();
+    var newGeom = new THREE.Geometry();
 
     _.each(data, function(feature) {
       var offset = new VIZI.Point();
@@ -122,16 +130,32 @@
       mesh.position.z = -1 * offset.y;
 
       // TODO: Provide Y offset in options (to avoid clashing with floor, etc)
-      // mesh.position.y = 1;
+      //mesh.position.y = 10;
+      mesh.position.y = 1;
 
       // Flip as they are up-side down
       // TODO: Remove this by implementing logic to make points clockwise
       mesh.rotation.x = 90 * Math.PI / 180;
 
       mesh.matrixAutoUpdate && mesh.updateMatrix();
-      combinedGeom.merge(mesh.geometry, mesh.matrix);
+
+      newGeom.merge(mesh.geometry, mesh.matrix);
+
+      var newMesh = new THREE.Mesh(newGeom, material);
+
+      if (self.options.layer.toString().length > 0) {
+        newMesh.renderDepth = -1 * self.options.layer;
+        newMesh.material.depthWrite = false;
+        newMesh.material.transparent = true;
+      }
+
+      self.objects.push(newMesh);
+      self.add(newMesh);
     });
 
+
+
+  /*
     // Move merged geom to 0,0 and return offset
     var offset = combinedGeom.center();
 
@@ -152,13 +176,28 @@
     combinedMesh.position.y = -1 * offset.y;
 
     combinedMesh.position.z = -1 * offset.z;
-
-    self.add(combinedMesh);
+    self.combined.push(combinedMesh);
+    self.add(combineMesh);*/
   };
 
   VIZI.BlueprintOutputChoropleth.prototype.onAdd = function(world) {
     var self = this;
     self.world = world;
     self.init();
+  };
+
+  VIZI.BlueprintOutputChoropleth.prototype.clickHandler = function(raycaster)  {
+    var self = this;
+    if (!self.objects) return;
+
+    var intersects = raycaster.intersectObjects( self.objects );
+    	for ( var i in intersects ) {
+
+            console.log(intersects[i]);
+
+		intersects[i].object.material.color = new THREE.Color( 0xff0000 );
+		intersects[i].object.material.needsUpdate = true;
+	}
+
   };
 }());

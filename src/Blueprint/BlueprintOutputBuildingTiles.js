@@ -5,7 +5,7 @@
 /**
  * Blueprint building tiles output
  * @author Robin Hawkes - vizicities.com
- */  
+ */
 
   // output: {
   //   type: "BlueprintOutputBuildingTiles",
@@ -103,7 +103,7 @@
         mesh.visible = false;
       });
     });
-    
+
     // TODO: Either remove previous tiles or prevent event if grid hasn't moved
     // There's a huge hang-up when zooming in due to re-loading and processing tiles
     grid.on("enabled", function() {
@@ -167,7 +167,7 @@
       // Wrap UVs within an array
       // https://github.com/mrdoob/three.js/blob/master/examples/js/exporters/GeometryExporter.js#L231
       model.uvs = [ Array.apply( [], model.uvs ) ];
-      
+
       // Keep getting a "Maximum call stack size exceeded" error here
       //model.faces = Array.apply( [], model.faces );
       var faces = [];
@@ -244,15 +244,15 @@
     //   // TODO: Add floor/level-based heights
     //   // << rounds the height down
     //   // var height = (feature.height * metersPerLevel * scalingFactor << 0);
-      
+
     //   // Multiply height in meters by pixels per meter ratio at latitude
     //   height *= pixelsPerMeter.y;
 
     //   var extrudeSettings = { amount: height, bevelEnabled: false };
-      
+
     //   var geom = new THREE.ExtrudeGeometry( shape, extrudeSettings );
     //   geom.computeFaceNormals();
-      
+
     //   var mesh = new THREE.Mesh(geom);
 
     //   mesh.position.y = height;
@@ -313,7 +313,7 @@
     // Proxy world pixelPerMeter
     // TODO: Find a better way so this doesn't have to be duplicated for every Blueprint
     var pixelsPerMeter = function(latLon, zoom) {
-      zoom = zoom || originZoom; 
+      zoom = zoom || originZoom;
       return crs.pixelsPerMeter(latLon, zoom);
     };
 
@@ -362,15 +362,15 @@
       // TODO: Add floor/level-based heights
       // << rounds the height down
       // var height = (feature.height * metersPerLevel * scalingFactor << 0);
-      
+
       // Multiply height in meters by pixels per meter ratio at latitude
       height *= ppm.y;
 
       var extrudeSettings = { amount: height, bevelEnabled: false };
-      
+
       var geom = new THREE.ExtrudeGeometry( shape, extrudeSettings );
       geom.computeFaceNormals();
-      
+
       var mesh = new THREE.Mesh(geom);
 
       mesh.position.y = height;

@@ -3,7 +3,7 @@ var world = new VIZI.World({
   center: new VIZI.LatLon(51.278709, 1.080535)
 });
 
-//var controls = new VIZI.ControlsMap(world.camera);
+var controls = new VIZI.ControlsMap(world.camera);
 var controls = new VIZI.ControlsClick(world.camera);
 
 var mapConfig = {
@@ -99,6 +99,7 @@ var buildingsConfig = {
         tilesPerDirection: 1,
         cullZoom: 13
       }],
+      opacity: 0.8,
       workerURL: "../../build/vizi-worker.min.js"
     }
   },
@@ -144,8 +145,8 @@ var buildingsConfig = {
   }]
 };
 
-//var switchboardBuildings = new VIZI.BlueprintSwitchboard(buildingsConfig);
-//switchboardBuildings.addToWorld(world);
+var switchboardBuildings = new VIZI.BlueprintSwitchboard(buildingsConfig);
+switchboardBuildings.addToWorld(world);
 
 var choroplethConfig = {
     input: {
@@ -158,8 +159,8 @@ var choroplethConfig = {
         type: "BlueprintOutputChoropleth",
         options: {
             colourRange: ["#00ff00", "#00e600", "#00cc00", "#00b300", "#009900", "#008000", "#006600"],
-            layer: 100,
-            opacity: 0.7,
+            layer: 500,
+            opacity: 0.02,
         }
     },
     triggers: [{
@@ -207,6 +208,7 @@ var csvConfig = {
         type: "BlueprintOutputDebugPoints",
         options: {
             colour: "#663399",
+            opacity: 0.7
         }
     },
     triggers: [{

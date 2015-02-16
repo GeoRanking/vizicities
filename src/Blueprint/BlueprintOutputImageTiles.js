@@ -2,33 +2,45 @@
 (function() {
   "use strict";
 
-/**
- * Blueprint image tiles output
- * @author Robin Hawkes - vizicities.com
- */  
+  /**
+   * Blueprint image tiles output
+   * @author Robin Hawkes - vizicities.com
+   */
 
-  // output: {
-  //   type: "BlueprintOutputImageTiles",
-  //   options: {
-  //     grids: [{
-  //       zoom: 19,
-  //       tilesPerDirection: 3,
-  //       cullZoom: 17
-  //     },
-  //     ...
-  //   }
-  // }
+    // output: {
+    //   type: "BlueprintOutputImageTiles",
+    //   options: {
+    //     grids: [{
+    //       zoom: 19,
+    //       tilesPerDirection: 3,
+    //       cullZoom: 17
+    //     },
+    //     ...
+    //   }
+    // }
   VIZI.BlueprintOutputImageTiles = function(options) {
     var self = this;
 
     VIZI.BlueprintOutput.call(self, options);
+
+    _.defaults(self.options, {
+      materialType: "MeshBasicMaterial",
+      materialOptions: {}
+    });
+
+    _.defaults(self.options.materialOptions, {
+      // color: 0x00FF00,
+      depthWrite: false,
+      //transparent: true,
+      //opacity: 0.4
+    });
 
     // Triggers and actions reference
     self.triggers = [
       {name: "initialised", arguments: ["tiles"]},
       {name: "gridUpdated", arguments: ["tiles"]}
     ];
-    
+
     self.actions = [
       {name: "outputImageTile", arguments: ["image", "tile"]}
     ];
@@ -108,7 +120,7 @@
 
       gridOutput.mesh.visible = false;
     });
-    
+
     grid.on("enabled", function() {
       if (VIZI.DEBUG) console.log("Grid enabled");
 
@@ -165,12 +177,15 @@
     // TODO: Set this to renderer.getMaxAnisotropy() / 4
     texture.anisotropy = 4;
 
-    var material = new THREE.MeshBasicMaterial({
-      // color: 0x00FF00,
-      map: texture,
-      depthWrite: false,
-      transparent: true
-    });
+    var materialType = self.options.materialType;
+    if (!materialType || typeof THREE[materialType] !== "function") {
+      materialType = "MeshLambertMaterial";
+    }
+
+    var materialOptions = _.clone(self.options.materialOptions);
+    materialOptions.map = texture;
+
+    var material = new THREE[materialType](materialOptions);
 
     // Update material otherwise canvas shows up black
     material.needsUpdate = true;
@@ -245,7 +260,7 @@
 
     gridHash.mesh.material.needsUpdate = true;
     gridHash.mesh.material.map.needsUpdate = true;
-    
+
     // if (VIZI.DEBUG) console.log("Output tile", image, tile);
   };
 

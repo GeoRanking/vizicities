@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>ViziCities - Basic Example</title>
+
+  <style type="text/css">
+    @import url(http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic,100,100italic&subset=latin,latin-ext);
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background: #222;
+      margin: 0;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    #vizicities-viewport {
+      height: 80%;
+      width: 98%;
+      margin: 1% 1% 0 1%;
+    }
+
+    #info-box {
+      height: 20%;
+      width: 96%;
+      margin: 0 1%;
+      background: #eeeeee;
+      padding: 1%;
+    }
+
+    h2, p {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      color: #333333;
+    }
+
+    hr {
+      border: none;
+      background: #333333;
+      height: 1px;
+      width: 100%;
+    }
+
+    .vizicities-attribution {
+      display: none;
+    }
+
+    canvas {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <link rel="stylesheet" type="text/css" href="../../build/vizi.css">
+</head>
+<body>
+  <div id="vizicities-viewport"></div>
+  <div id="info-box">
+    <h2>Information title</h2>
+    <hr/>
+    <p>Information displays on click of an area or data point</p>
+  </div>
+  <script src="../../build/vizi.js"></script>
+  <script src="main.js"></script>
+  <script>
+    var areaData = new CustomEvent('build', { 'detail': 'data' });
+
+    var info = document.getElementById('info-box');
+    info.addEventListener('build', function (e) {'data'}, false);
+
+    info.dispatchEvent(event);
+  </script>
+</body>
+</html>

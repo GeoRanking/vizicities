@@ -37,7 +37,7 @@
   ],
   "devDependencies": {
     "underscore": "~1.7.0",
-    "threejs": "*",
+    "threejs": "r70",
     "wildemitter": "HenrikJoreteg/wildemitter#~1.0.1",
     "proj4": "~2.3.3",
     "d3": "~3.4.13",
