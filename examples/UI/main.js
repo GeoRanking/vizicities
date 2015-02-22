@@ -159,6 +159,7 @@ var choroplethConfig = {
         type: "BlueprintOutputChoropleth",
         options: {
             colourRange: ["#00ff00", "#00e600", "#00cc00", "#00b300", "#009900", "#008000", "#006600"],
+            highlightColour: "#ff69b4",
             layer: 100,
             opacity: 0.7
         }
@@ -238,8 +239,8 @@ var distanceConfig = {
     }]
 };
 
-var switchboardDistance = new VIZI.BlueprintSwitchboard(distanceConfig);
-switchboardDistance.addToWorld(world);
+//var switchboardDistance = new VIZI.BlueprintSwitchboard(distanceConfig);
+//switchboardDistance.addToWorld(world);
 
 var distanceCircleConfig = {
     input: {
@@ -283,8 +284,8 @@ var distanceCircleConfig = {
     }]
 };
 
-var switchboardDistanceCircle = new VIZI.BlueprintSwitchboard(distanceCircleConfig);
-switchboardDistanceCircle.addToWorld(world);
+//var switchboardDistanceCircle = new VIZI.BlueprintSwitchboard(distanceCircleConfig);
+//switchboardDistanceCircle.addToWorld(world);
 
 var csvConfig = {
     input: {

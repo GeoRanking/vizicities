@@ -159,8 +159,9 @@ var choroplethConfig = {
         type: "BlueprintOutputChoropleth",
         options: {
             colourRange: ["#00ff00", "#00e600", "#00cc00", "#00b300", "#009900", "#008000", "#006600"],
+            highlightColour: "#ff69b4",
             layer: 500,
-            opacity: 0.02,
+            opacity: 0.8,
         }
     },
     triggers: [{

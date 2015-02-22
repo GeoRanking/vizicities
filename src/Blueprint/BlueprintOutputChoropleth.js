@@ -41,6 +41,8 @@
     VIZI.Messenger.on("clickedObject", function(raycaster) {
       self.clickHandler(raycaster);
     });
+    
+    self.current;
   };
 
   VIZI.BlueprintOutputChoropleth.prototype = Object.create( VIZI.BlueprintOutput.prototype );
@@ -58,21 +60,6 @@
   // }
   VIZI.BlueprintOutputChoropleth.prototype.outputChoropleth = function(data) {
     var self = this;
-
-    var material = new THREE.MeshLambertMaterial({
-      vertexColors: THREE.VertexColors,
-      ambient: 0xffffff,
-      emissive: 0xcccccc,
-      shading: THREE.FlatShading,
-      // TODO: Remove this by implementing logic to make points clockwise
-      side: THREE.BackSide
-    });
-
-    // Choropleth opacity settings
-    if (self.options.opacity)  {
-      material.opacity = self.options.opacity;
-      material.transparent = true;
-    }
 
     // Choropleth range settings
     if (self.options.colourRange) {
@@ -95,9 +82,24 @@
     }
 
     //var combinedGeom = new THREE.Geometry();
-    var newGeom = new THREE.Geometry();
 
     _.each(data, function(feature) {
+
+	var material = new THREE.MeshLambertMaterial({
+	  vertexColors: THREE.VertexColors,
+	  ambient: 0xffffff,
+	  emissive: 0x000000,
+	  shading: THREE.FlatShading,
+	  // TODO: Remove this by implementing logic to make points clockwise
+	  side: THREE.BackSide
+	});
+
+    // Choropleth opacity settings
+    if (self.options.opacity)  {
+      material.opacity = self.options.opacity;
+      material.transparent = true;
+    }
+    
       var offset = new VIZI.Point();
       var shape = new THREE.Shape();
       _.each(feature.outline, function(coord, index) {
@@ -121,7 +123,8 @@
       // Use choropleth range colour if defined, else random
       var colour = (self.options.colourRange) ? new THREE.Color(scaleColour(feature.value)) : new THREE.Color(0xffffff * Math.random());
 
-      self.applyVertexColors(geom, colour);
+      //self.applyVertexColors(geom, colour);
+	  material.color = colour;
 
       var mesh = new THREE.Mesh(geom);
 
@@ -138,6 +141,8 @@
       mesh.rotation.x = 90 * Math.PI / 180;
 
       mesh.matrixAutoUpdate && mesh.updateMatrix();
+      
+      var newGeom = new THREE.Geometry();
 
       newGeom.merge(mesh.geometry, mesh.matrix);
 
@@ -191,12 +196,17 @@
     if (!self.objects) return;
 
     var intersects = raycaster.intersectObjects( self.objects );
-    	for ( var i in intersects ) {
+	
+	if ( self.current ) { self.current.object.material.color = self.currentColour; }
 
-            console.log(intersects[i]);
-
-		intersects[i].object.material.color = new THREE.Color( 0xff0000 );
+    for ( var i in intersects ) {
+	    
+		self.current = intersects[i];
+		self.currentColour = intersects[i].object.material.color;
+		
+		intersects[i].object.material.color = self.options.highlightColour ? new THREE.Color(self.options.highlightColour) : new THREE.Color(0xffffff * Math.random());
 		intersects[i].object.material.needsUpdate = true;
+		
 	}
 
   };

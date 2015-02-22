@@ -90,7 +90,7 @@ var choroplethConfig = {
     input: {
         type: "BlueprintInputGeoJSON",
         options: {
-            path: "http://192.12.121.226:5000/ranks/geojson"
+            path: "./data/allCT.geojson"
         }
     },
     output: {
