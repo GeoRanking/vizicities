@@ -24,6 +24,30 @@
       width: 98%;
       margin: 1% 1% 0 1%;
     }
+    
+    
+    #scale
+    {
+        float: left;
+        color: #000000;
+        position: absolute;
+        background: #eeeeee;
+		font-family: 'Roboto', sans-serif;
+		font-size: 12px;
+		margin-left: 13px;
+    }
+    
+    #scale div {
+        max-width: 50px;
+        float: left;
+        padding: 17px 20px;
+        opacity: 0.7;
+    }
+    
+    #scale div:first-child, #scale div:last-child {
+	    padding: 10px 20px;
+		max-width: 200px;
+    }
 
     #info-box {
       height: 20%;
@@ -33,7 +57,7 @@
       padding: 1%;
     }
 
-    h2, p {
+    h2, h3, p {
       margin: 0;
       font-family: 'Roboto', sans-serif;
       color: #333333;
@@ -59,21 +83,32 @@
   <link rel="stylesheet" type="text/css" href="../../build/vizi.css">
 </head>
 <body>
+	<div id="scale">
+	    <div>Least Desirable Area</div>
+	    <div style="background-color: rgb(0, 255, 0);"></div>
+	    <div style="background-color: rgb(0, 230, 0);"></div>
+	    <div style="background-color: rgb(0, 204, 0);"></div>
+	    <div style="background-color: rgb(0, 179, 0);"></div>
+	    <div style="background-color: rgb(0, 153, 0);"></div>
+	    <div style="background-color: rgb(0, 128, 0);"></div>
+	    <div style="background-color: rgb(0, 102, 0);"></div>
+	    <div>Most Desirable Area</div>
+    </div>
   <div id="vizicities-viewport"></div>
   <div id="info-box">
-    <h2>Information title</h2>
-    <hr/>
-    <p>Information displays on click of an area or data point</p>
+    <h2></h2>
+    <h3></h3>
+    <p style="visibility: hidden">There should be some more info here when Mr Hudson has finished the database bits.</p>
   </div>
   <script src="../../build/vizi.js"></script>
   <script src="main.js"></script>
-  <script>
-    var areaData = new CustomEvent('build', { 'detail': 'data' });
-
-    var info = document.getElementById('info-box');
-    info.addEventListener('build', function (e) {'data'}, false);
-
-    info.dispatchEvent(event);
+  <script>    
+	VIZI.Messenger.on("areaData", function(areaData) {
+	    console.log(areaData);
+	    document.querySelector("#info-box h2").innerHTML = areaData.name;
+	    document.querySelector("#info-box h3").innerHTML = "Ranking: " + areaData.ranking;
+	    document.querySelector("#info-box p").style.visibility = "visible";
+	});
   </script>
 </body>
 </html>

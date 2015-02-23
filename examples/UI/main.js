@@ -188,7 +188,8 @@ var choroplethConfig = {
                 // Return a new object for each item with the given properties
                 transformation: {
                     outline: "geometry.coordinates[0]",
-                    value: "properties.ranking"
+                    value: "properties.ranking",
+                    properties: "properties"
                 }
             }
         }

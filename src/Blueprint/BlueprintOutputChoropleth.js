@@ -119,7 +119,7 @@
       });
 
       var geom = new THREE.ShapeGeometry( shape );
-
+	  
       // Use choropleth range colour if defined, else random
       var colour = (self.options.colourRange) ? new THREE.Color(scaleColour(feature.value)) : new THREE.Color(0xffffff * Math.random());
 
@@ -147,6 +147,8 @@
       newGeom.merge(mesh.geometry, mesh.matrix);
 
       var newMesh = new THREE.Mesh(newGeom, material);
+      
+      newMesh.userData = feature.properties;
 
       if (self.options.layer.toString().length > 0) {
         newMesh.renderDepth = -1 * self.options.layer;
@@ -206,6 +208,10 @@
 		
 		intersects[i].object.material.color = self.options.highlightColour ? new THREE.Color(self.options.highlightColour) : new THREE.Color(0xffffff * Math.random());
 		intersects[i].object.material.needsUpdate = true;
+		
+		var areaData = self.current.object.userData;
+		
+		VIZI.Messenger.emit("areaData", areaData);
 		
 	}
 
